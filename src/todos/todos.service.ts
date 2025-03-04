@@ -8,16 +8,16 @@ export class TodosService {
   constructor(@InjectModel(Todo.name) private todoModel: Model<Todo>) {}
 
   async createTodo(title: string): Promise<Todo> {
-    const newTodo = new this.todoModel({ title });
-    return newTodo.save();
+    const newTodo = this.todoModel.create({ title });
+    return newTodo;
   }
 
   async getAllTodos(): Promise<Todo[]> {
-    return this.todoModel.find().exec();
+    return this.todoModel.find();
   }
 
   async getTodoById(id: string): Promise<Todo> {
-    const todo = await this.todoModel.findById(id).exec();
+    const todo = await this.todoModel.findById(id);
     if (!todo) {
       throw new NotFoundException('Todo not found');
     }
